@@ -3,17 +3,18 @@
 """
 Created on Thu May 31 15:41:51 2018
 
-@author: zijiachen
+@author: zijiachen & Teng Hu
 """
 
 import requests
 from bs4 import BeautifulSoup
 import os 
+import sys
 import traceback 
 import time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-
+import traceback
 
 def download(url,filename):
     try:
@@ -41,31 +42,82 @@ def img_downloader(url, url_filter='', path='imgs'):
     
     c=0
     t=time.time()
-    browser = webdriver.Chrome('C:/Users/hieri/OneDrive/Desktop/Anime-GAN-master/chromedriver.exe')
-    browser.get(url)
-    html = browser.find_element_by_tag_name('html')
-    html.send_keys(Keys.END)
-    time.sleep(1)
-    html.send_keys(Keys.END)
-    time.sleep(1)
-    html.send_keys(Keys.END)
-    browser.find_elements
-    imgs = browser.find_elements_by_tag_name('img')
-
-    print(html.text)
-    for i in range(len(imgs)):
-        img_url = imgs[i].get_attribute("src")
+    # windows only
+    #browser = webdriver.Chrome('/home/hierifer/Desktop/AnimeGAN/chromedriver.exe')
+    browser = webdriver.Chrome('/home/hierifer/Desktop/AnimeGAN/chromedriver')
+    try:
         
-        if url_filter in img_url:
-            filename = os.path.join('imgs', img_url.split('/')[-1])
-            download(img_url, filename)
-        c+=1    
+        browser.get(url)
+        html = browser.find_element_by_tag_name('html')
+        html.send_keys(Keys.END)
+        time.sleep(1)
+        html.send_keys(Keys.END)
+        time.sleep(1)
+        html.send_keys(Keys.END)
+        imgs = browser.find_elements_by_tag_name('img')
+    
+        print(html.text)
+        for i in range(len(imgs)):
+            img_url = imgs[i].get_attribute("src")
             
-    browser.quit()
-    print("Visited: " + url + " Downloaded Images: " +str(c))
-    print('time:%f'%(time.time()-t))
+            if url_filter in img_url:
+                filename = os.path.join('imgs', img_url.split('/')[-1])
+                download(img_url, filename)
+            c+=1    
+                
+        browser.quit()
+        print("Visited: " + url + " Downloaded Images: " +str(c))
+        print('time:%f'%(time.time()-t))
+    except:
+        browser.quit()
+        print("Some Errors Raised on img_downloader:", sys.exc_info()[0])
 
-
+def pinterest_img_downloader(url='', keyword='', url_filter='', path='imgs'):
+    if(keyword !=''):
+        keyword.lower()
+        keyword.replace(' ','%20')
+        url = "https://www.pinterest.com/search/pins/?q="+keyword
+    if os.path.exists(path) is False:
+        os.makedirs(path)
+    
+    c=0
+    t=time.time()
+    # windows only
+    #browser = webdriver.Chrome('/home/hierifer/Desktop/AnimeGAN/chromedriver.exe')
+    browser = webdriver.Chrome('/home/hierifer/Desktop/AnimeGAN/chromedriver')
+    try:
+        if(url !=''):
+            browser.get(url)
+        last = 0
+        cur = 1
+        p = 0
+        while(cur > last):   
+            last = cur
+            html = browser.find_element_by_tag_name('html')
+            cur = len(html.text)
+            html.send_keys(Keys.END)
+            time.sleep(3)
+            p+=1
+        
+        
+        imgs = browser.find_elements_by_tag_name('img')
+        
+        for i in range(len(imgs)):
+            img_url = imgs[i].get_attribute("src")
+            
+            if url_filter in img_url:
+                filename = os.path.join('imgs', img_url.split('/')[-1])
+                download(img_url, filename)
+            c+=1    
+              
+        print("Visited: " + url + " Pages Scrolled:" + str(p) +" Downloaded Images: " +str(c))
+        print('time:%f'%(time.time()-t))
+        browser.quit()
+    except:
+        browser.quit()
+        print("Some Errors Raised on img_downloader: ",sys.exc_info()[0])
+        traceback.print_exc()
+   
 #Main Downloader
 
 
@@ -89,5 +141,5 @@ for i in range(start, end + 1):
     print('time:%f'%(time.time()-t))
 '''
 
-img_downloader("https://www.pinterest.com/search/pins/?q=eromanga%20sensei", url_filter="pinimg")
+pinterest_img_downloader(keyword="touhou", url_filter="pinimg")
 
