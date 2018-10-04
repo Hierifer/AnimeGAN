@@ -23,6 +23,6 @@ The project bases on python 3.6 and Pytorch. Running it requires all packages fr
 
 ## Author
 * **Teng Hu** - *Initial work FrameWork & Data* - Email: thu4@dons.usfca.edu
-* **Zijia Chen** - *Initial work Network* - Email: ???????
+* **Zijia Chen** - *Initial work Network* - Email: zic138@ucsd.edu
 
 ## Acknowledgments
