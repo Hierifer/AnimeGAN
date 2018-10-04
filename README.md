@@ -10,9 +10,9 @@ The project bases on python 3.6 and Pytorch. Running it requires all packages fr
 * CUDA
 
 ### Installing
-Anaconda --- Python 3.6
-Pytorch
-CUDA
+* Anaconda --- Python 3.6
+* Pytorch
+* CUDA
 
 ```
 
