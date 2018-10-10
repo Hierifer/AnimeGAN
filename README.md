@@ -16,11 +16,13 @@ The project bases on python 3.6 and Pytorch. Running it requires all packages fr
 * openCV
 
 ## Running the demo
-
+* crawler_module.py: you may download images from any websites by selenium. By default, crawler works on pinterest. 
+* face detector.py: crop the anime face by openCV, and thank for the work of nagadomi (https://github.com/nagadomi/lbpcascade_animeface) 
+* AnimeGAN.ipynb: you may train this model around half hour depends on your GPU.
 ## Built With
 
 ## Author
-* **Teng Hu** - *Initial work FrameWork & Data* - Email: thu4@dons.usfca.edu
+* **Teng Hu** - *Initial work Data* - Email: teh007@eng.ucsd.edu
 * **Zijia Chen** - *Initial work Network* - Email: zic138@ucsd.edu
 
 ## Acknowledgments
